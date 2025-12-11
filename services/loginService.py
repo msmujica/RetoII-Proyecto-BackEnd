@@ -1,8 +1,10 @@
 from datetime import datetime, timedelta
 import jwt
 import uuid
-from fastapi import HTTPException
+from fastapi import Depends, HTTPException, status, Header
 from sqlalchemy.orm import Session
+
+from repositories.database import get_db
 from repositories.loginRepository import LoginRepository
 
 secretKey = "bbfd9ee2a536ed05d4b609ff305b09f54b5af49ac3e567456fa913d9137c9617"
@@ -78,3 +80,15 @@ class LoginService:
 
         except jwt.InvalidTokenError:
             raise HTTPException(status_code=401, detail="Invalid token")
+
+    def requireAuth(db: Session = Depends(get_db), authorization: str = Header(default=None)):
+        if not authorization:
+            raise HTTPException(status_code=401, detail="Missing authorization header")
+
+        if not authorization.startswith("Bearer "):
+            raise HTTPException(status_code=401, detail="Missing authorization header format")
+
+        token = authorization.split(" ", 1)[1]
+
+        user = LoginService.verifyToken(db, token)
+        return user

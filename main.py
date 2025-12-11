@@ -1,10 +1,12 @@
 # main.py
 from fastapi import FastAPI
 from controllers.loginController import router as login_router
+from controllers.tasksController import router as tasks_router
 
 app = FastAPI(title="FastAPI", version="1.0.0")
 
 app.include_router(login_router)
+app.include_router(tasks_router)
 
 @app.get("/")
 def root():
