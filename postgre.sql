@@ -4,7 +4,7 @@ create table users(
     lastName varchar(100),
     email varchar(100) not null unique,
     password varchar(255) not null,
-    jwi varchar(32) default null
+    jti varchar(36) default null
 );
 
 create table tareas(
