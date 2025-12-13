@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 
 POSTGRES_USER = "root"
 POSTGRES_PASSWORD = "root"
-POSTGRES_HOST = "localhost"
+POSTGRES_HOST = "db"
 POSTGRES_PORT = "5432"
 POSTGRES_DB = "tareas"
 
